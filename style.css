@@ -1,32 +1,18 @@
-/* =========================================
-   BASE SETTINGS & VARIABLES
-   ========================================= */
 :root {
-    /* Color Palette */
-    --bg-color: #060b19; /* Deep Slate/Navy */
-    --second-bg-color: #0d152a; /* Lighter Slate */
-    --text-color: #f8fafc; /* Crisp White */
-    --text-muted: #94a3b8; /* Slate 400 */
-    --main-color: #38bdf8; /* Light Blue */
-    --accent-color: #818cf8; /* Indigo */
-    
-    /* Gradients */
-    --gradient-1: linear-gradient(135deg, var(--main-color), var(--accent-color));
+        --bg-color: #060b19;     --second-bg-color: #0d152a;     --text-color: #f8fafc;     --text-muted: #94a3b8;     --main-color: #38bdf8;     --accent-color: #818cf8;     
+        --gradient-1: linear-gradient(135deg, var(--main-color), var(--accent-color));
     --gradient-border: linear-gradient(135deg, rgba(56, 189, 248, 0.5), rgba(129, 140, 248, 0.5));
     --glass-bg: rgba(13, 21, 42, 0.6);
     --glass-border: rgba(255, 255, 255, 0.05);
 
-    /* Typography */
-    --font-primary: 'Plus Jakarta Sans', sans-serif;
+        --font-primary: 'Plus Jakarta Sans', sans-serif;
     
-    /* Sizes & Shadows */
-    --header-height: 5rem;
+        --header-height: 5rem;
     --border-radius: 12px;
     --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     --neon-glow: 0 0 15px rgba(56, 189, 248, 0.4), 0 0 30px rgba(129, 140, 248, 0.2);
     
-    /* Transitions */
-    --trans-default: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --trans-default: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
@@ -37,8 +23,7 @@
 }
 
 html {
-    font-size: 62.5%; /* 1rem = 10px */
-    overflow-x: hidden;
+    font-size: 62.5%;     overflow-x: hidden;
 }
 
 body {
@@ -47,16 +32,13 @@ body {
     font-family: var(--font-primary);
     line-height: 1.6;
     overflow-x: hidden;
-    cursor: none; /* For custom cursor */
-}
+    cursor: none; }
 
-/* Custom Selection */
 ::selection {
     background-color: var(--main-color);
     color: var(--bg-color);
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -71,9 +53,6 @@ body {
     background: var(--main-color);
 }
 
-/* =========================================
-   TYPOGRAPHY & UTILS
-   ========================================= */
 h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
     font-weight: 700;
@@ -111,7 +90,6 @@ img {
     display: inline-block;
 }
 
-/* Buttons */
 .btn {
     display: inline-block;
     padding: 1.2rem 2.8rem;
@@ -163,9 +141,6 @@ img {
     text-align: center;
 }
 
-/* =========================================
-   CUSTOM CURSOR
-   ========================================= */
 .cursor-dot, .cursor-outline {
     position: fixed;
     top: 0; left: 0;
@@ -195,9 +170,6 @@ img {
     border-color: var(--main-color);
 }
 
-/* =========================================
-   HEADER / NAVBAR
-   ========================================= */
 header {
     position: fixed;
     top: 0; left: 0;
@@ -261,9 +233,6 @@ header.sticky {
     cursor: pointer;
 }
 
-/* =========================================
-   HERO SECTION
-   ========================================= */
 .home {
     display: flex;
     align-items: center;
@@ -273,7 +242,6 @@ header.sticky {
     overflow: hidden;
 }
 
-/* Background blob */
 .home::before {
     content: '';
     position: absolute;
@@ -352,7 +320,6 @@ header.sticky {
     gap: 2rem;
 }
 
-/* Abstract Hero Art */
 .home-img {
     flex: 1;
     display: flex;
@@ -422,9 +389,6 @@ header.sticky {
 @keyframes counter-spin { 100% { transform: translateY(-50%) rotate(-360deg); } }
 
 
-/* =========================================
-   ABOUT SECTION
-   ========================================= */
 .about {
     background: var(--second-bg-color);
 }
@@ -526,9 +490,6 @@ header.sticky {
     box-shadow: 0 4px 10px rgba(56, 189, 248, 0.2);
 }
 
-/* =========================================
-   PROJECTS SECTION
-   ========================================= */
 .projects {
     position: relative;
 }
@@ -637,9 +598,6 @@ header.sticky {
     color: var(--text-muted);
 }
 
-/* =========================================
-   CONTACT SECTION
-   ========================================= */
 .contact {
     background: var(--second-bg-color);
 }
@@ -745,9 +703,6 @@ header.sticky {
     color: var(--main-color);
 }
 
-/* =========================================
-   FOOTER
-   ========================================= */
 .footer {
     display: flex;
     justify-content: space-between;
@@ -785,9 +740,6 @@ header.sticky {
     box-shadow: 0 5px 15px rgba(56, 189, 248, 0.3);
 }
 
-/* =========================================
-   ANIMATIONS & REVEALS
-   ========================================= */
 .reveal {
     opacity: 0;
     transition: all 0.8s ease;
@@ -809,9 +761,6 @@ header.sticky {
 .delay-4 { transition-delay: 0.4s; }
 .delay-5 { transition-delay: 0.5s; }
 
-/* =========================================
-   RESPONSIVE DESIGN (MEDIA QUERIES)
-   ========================================= */
 @media (max-width: 1200px) {
     html { font-size: 55%; }
     .home-img .hero-shape { width: 300px; height: 300px; }
@@ -822,7 +771,7 @@ header.sticky {
     section { padding: 10rem 5% 2rem; }
     .about-container { flex-direction: column; align-items: center; text-align: center; }
     .about-img { width: 100%; max-width: 500px; margin: 0 auto 5rem auto; display: flex; justify-content: center; position: relative; }
-    .img-border { display: none; /* Hide border on tablet/mobile to keep it perfectly centered */ }
+    .img-border { display: none;  }
     .contact-container { flex-direction: column; padding: 3rem; text-align: center; }
     .contact-items { display: flex; flex-direction: column; align-items: center; }
 }
