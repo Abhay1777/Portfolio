@@ -106,6 +106,7 @@ img {
 .gradient-text {
     background: var(--gradient-1);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
 }
@@ -815,9 +816,11 @@ header.sticky {
 @media (max-width: 991px) {
     header { padding: 2rem 5%; }
     section { padding: 10rem 5% 2rem; }
-    .about-container { flex-direction: column; }
-    .about-img { width: 100%; max-width: 500px; margin: 0 auto; }
-    .contact-container { flex-direction: column; padding: 3rem; }
+    .about-container { flex-direction: column; align-items: center; text-align: center; }
+    .about-img { width: 100%; max-width: 500px; margin: 0 auto 5rem auto; display: flex; justify-content: center; position: relative; }
+    .img-border { display: none; /* Hide border on tablet/mobile to keep it perfectly centered */ }
+    .contact-container { flex-direction: column; padding: 3rem; text-align: center; }
+    .contact-items { display: flex; flex-direction: column; align-items: center; }
 }
 
 @media (max-width: 768px) {
@@ -835,17 +838,25 @@ header.sticky {
         display: none;
     }
     .navbar.active { display: flex; flex-direction: column; }
-    .navbar a { display: block; font-size: 2rem; margin: 1.5rem 0; }
+    .navbar a { display: block; font-size: 2rem; margin: 1.5rem 0; text-align: center; }
     
-    .home { flex-direction: column-reverse; justify-content: center; text-align: center; gap: 5rem; }
+    .home { flex-direction: column-reverse; justify-content: center; text-align: center; gap: 5rem; padding-top: 12rem; }
     .home-content h1 { font-size: 5rem; }
     .social-media { justify-content: center; }
     .btn-group { justify-content: center; }
-    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
     .input-group { flex-direction: column; gap: 0; }
+    
+    .projects-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    
+    .skills-wrapper h4 { text-align: center; }
+    .skills-tags { justify-content: center; }
 }
 
 @media (max-width: 450px) {
     html { font-size: 50%; }
     .stats-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
 }
