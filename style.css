@@ -537,6 +537,7 @@ header.sticky {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 4rem;
+    justify-content: center;
 }
 
 .project-card {
@@ -545,6 +546,9 @@ header.sticky {
     overflow: hidden;
     border: 1px solid var(--glass-border);
     transition: var(--trans-default);
+    max-width: 450px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .project-card:hover {

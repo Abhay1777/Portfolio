@@ -74,7 +74,7 @@ window.onscroll = () => {
 /* =========================================
    DYNAMIC TYPING EFFECT
    ========================================= */
-const words = ["Full Stack Developer.", "IT Student.", "Digital Artist."];
+const words = ["Full Stack Developer.", "IT Student."];
 let wordIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
