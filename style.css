@@ -412,14 +412,7 @@ header.sticky {
     z-index: 2;
     aspect-ratio: 4/5;
     object-fit: cover;
-    box-shadow: 20px 20px 0 var(--accent-color);
-    border: 2px solid var(--glass-border);
-    transition: var(--trans-default);
     width: 100%;
-}
-.about-img:hover img {
-    transform: translate(-10px, -10px);
-    box-shadow: 30px 30px 0 var(--accent-color);
 }
 
 .about-content {
