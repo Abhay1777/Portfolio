@@ -117,12 +117,12 @@ export default function Contact() {
                       href={href}
                       target={href.startsWith("http") ? "_blank" : undefined}
                       rel="noopener noreferrer"
-                      className="text-base font-medium hover:text-[var(--main-color)] transition-colors"
+                      className="text-base font-medium hover:text-[var(--main-color)] transition-colors break-all"
                     >
                       {value}
                     </a>
                   ) : (
-                    <span className="text-base font-medium">{value}</span>
+                    <span className="text-base font-medium break-words">{value}</span>
                   )}
                 </div>
               </div>

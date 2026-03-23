@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import { Github, Linkedin, Download, ArrowDown, Sparkles, Terminal, Smartphone, Layout, Code2 } from "lucide-react";
 import Link from "next/link";
@@ -20,6 +20,14 @@ export default function Hero() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopNum, setLoopNum] = useState(0);
   const [typingSpeed, setTypingSpeed] = useState(100);
+  const [activeHologram, setActiveHologram] = useState(0);
+
+  const techStack = [
+    { Icon: SiReact, color: "#61DAFB", name: "React" },
+    { Icon: SiAndroidstudio, color: "#3DDC84", name: "Android" },
+    { Icon: SiNodedotjs, color: "#339933", name: "Node.js" },
+    { Icon: SiPython, color: "#3776AB", name: "Python" },
+  ];
 
   // Mouse Parallax
   const mouseX = useMotionValue(0);
@@ -31,8 +39,6 @@ export default function Hero() {
 
   const rotateX = useTransform(sprY, [-0.5, 0.5], ["20deg", "-20deg"]);
   const rotateY = useTransform(sprX, [-0.5, 0.5], ["-20deg", "20deg"]);
-  const translateX = useTransform(sprX, [-0.5, 0.5], ["-30px", "30px"]);
-  const translateY = useTransform(sprY, [-0.5, 0.5], ["-30px", "30px"]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -44,6 +50,14 @@ export default function Hero() {
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
+
+  // 6-second dynamic cycle
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveHologram((prev) => (prev + 1) % techStack.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [techStack.length]);
 
   useEffect(() => {
     const handleType = () => {
@@ -80,7 +94,7 @@ export default function Hero() {
              <span className="text-[10px] font-black text-white/50 tracking-[0.4em] uppercase ml-1">The Digital Interface of</span>
           </motion.div>
 
-          <h1 className="text-7xl lg:text-[8.5rem] font-black leading-[0.9] mb-8 tracking-tighter text-white uppercase italic">
+          <h1 className="text-5xl lg:text-7xl font-black leading-[1] mb-6 tracking-tighter text-white uppercase italic">
             Abhay
             <br />
             <span className="gradient-text-animated animate-glitch relative -ml-1">Dubey.</span>
@@ -88,14 +102,14 @@ export default function Hero() {
 
           <div className="flex items-center gap-4 mb-10 justify-center lg:justify-start">
              <div className="h-0.5 w-12 bg-gradient-to-r from-[var(--main-color)] to-transparent" />
-             <h2 className="text-2xl font-bold flex items-center gap-2 text-white/80">
+             <h2 className="text-xl font-bold flex items-center gap-2 text-white/80">
                 I am a <span className="text-[var(--main-color)]">{currentWord}</span>
                 <motion.div animate={{ height: [0, 24, 0] }} transition={{ duration: 1, repeat: Infinity }} className="w-1 bg-white" />
              </h2>
           </div>
 
-          <p className="text-lg text-[var(--text-muted)] mb-14 max-w-lg mx-auto lg:mx-0 leading-relaxed font-medium">
-            Building cinematic interfaces for <span className="text-white">Android</span> and <span className="text-white">Web</span>. Transforming complex ideas into smooth, interactive experiences.
+          <p className="text-base text-[var(--text-muted)] mb-14 max-w-lg mx-auto lg:mx-0 leading-relaxed font-medium">
+            Building cinematic interfaces for <span className="text-white font-bold">Android</span> and <span className="text-white font-bold">Web</span>. Transforming complex ideas into smooth, interactive experiences.
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
@@ -123,24 +137,45 @@ export default function Hero() {
              className="relative w-64 h-[530px] rounded-[3rem] bg-[#0f172a] border-[8px] border-[#1e293b] shadow-[0_50px_100px_rgba(0,0,0,0.8),0_0_80px_rgba(56,189,248,0.2)] p-2 z-20 group cursor-grab active:cursor-grabbing"
            >
               {/* Screen Content */}
-              <div className="w-full h-full rounded-[2.5rem] bg-[#030712] overflow-hidden relative flex flex-col items-center justify-center">
+              <div className="w-full h-full rounded-[2.5rem] bg-[#030712] overflow-hidden relative flex flex-col items-center justify-center p-6">
                  {/* Internal HUD */}
                  <div className="absolute top-8 left-1/2 -translate-x-1/2 flex items-center gap-1.5 opacity-50">
                     <div className="w-12 h-1 bg-white/20 rounded-full" />
                  </div>
                  
-                 {/* Holographic Icon Stack */}
+                 {/* Holographic Icon Stack (CYCLES EVERY 6 SECONDS) */}
                  <div className="relative z-10 flex flex-col items-center">
-                    <motion.div 
-                        animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }}
-                        transition={{ duration: 4, repeat: Infinity }}
-                        className="w-24 h-24 rounded-3xl bg-gradient-to-br from-[var(--main-color)] to-[var(--accent-color)] flex items-center justify-center text-white shadow-[0_0_40px_rgba(56,189,248,0.6)]"
-                    >
-                       <SiReact size={54} className="animate-[spin_20s_linear_infinite]" />
-                    </motion.div>
+                    <AnimatePresence mode="wait">
+                      <motion.div 
+                        key={activeHologram}
+                        initial={{ opacity: 0, scale: 0.5, rotateY: 90 }}
+                        animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+                        exit={{ opacity: 0, scale: 1.5, rotateY: -90 }}
+                        transition={{ duration: 0.6, type: "spring" }}
+                        className="w-24 h-24 rounded-3xl bg-white/5 flex items-center justify-center text-white border border-white/10 shadow-[0_0_40px_rgba(56,189,248,0.3)]"
+                        style={{ color: techStack[activeHologram].color }}
+                      >
+                         {/* Correct Dynamic Icon Component Rendering */}
+                         {(() => {
+                            const ActiveIcon = techStack[activeHologram].Icon;
+                            return <ActiveIcon size={54} />;
+                         })()}
+                      </motion.div>
+                    </AnimatePresence>
+                    
                     <div className="mt-8 flex flex-col items-center gap-1">
-                       <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--main-color)]">System Online</span>
-                       <span className="text-xs font-bold text-white/80">Abhay_UI v4.0</span>
+                       <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--main-color)]">System Status</span>
+                       <AnimatePresence mode="wait">
+                         <motion.span 
+                            key={activeHologram}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            className="text-xs font-bold text-white/80"
+                          >
+                           {techStack[activeHologram].name} Optimized
+                         </motion.span>
+                       </AnimatePresence>
                     </div>
                  </div>
 
@@ -157,7 +192,7 @@ export default function Hero() {
               <div className="absolute top-1/2 -right-2.5 translate-y-8 w-1 h-6 bg-white/10 rounded-l-md" />
            </motion.div>
 
-           {/* Holographic Orbit (Playful icons floating AROUND the phone) */}
+           {/* Holographic Orbit */}
            <div className="absolute inset-0 z-30 pointer-events-none">
               {[
                 { Icon: SiAndroidstudio, color: "#3DDC84", y: -150, x: -120 },
@@ -168,7 +203,7 @@ export default function Hero() {
               ].map((item, i) => (
                 <motion.div
                   key={i}
-                  animate={{ y: [item.y, item.y - 20, item.y], x: [item.x, item.x + 10, item.x] }}
+                  animate={{ y: [item.y, item.y - 20, item.y], x: [item.x, item.x + 10, item.x], rotate: [0, 10, 0] }}
                   transition={{ duration: 4 + i, repeat: Infinity, ease: "easeInOut" }}
                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 glass-panel border border-white/10 rounded-xl"
                   style={{ color: item.color }}
@@ -177,24 +212,8 @@ export default function Hero() {
                 </motion.div>
               ))}
            </div>
-
-           {/* Floating Particle Cloud */}
-           <div className="absolute inset-0 -z-0 opacity-20 flex justify-center items-center">
-              <div className="w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(56,189,248,0.2)_0%,rgba(6,11,25,0)_70%)] animate-pulse-energy" />
-           </div>
         </motion.div>
       </div>
-
-      {/* Hero Scan Bar (Bottom Playful Text) */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-6 left-[5%] lg:left-[9%] text-[var(--text-muted)] text-[8px] font-bold uppercase tracking-[0.5em] hidden lg:block"
-      >
-         UI_ENGINE_V4 // [INTERACTIVE_3D_ENABLED] // TARGET_USER: VISITOR_NULL
-      </motion.div>
-
     </section>
   );
 }

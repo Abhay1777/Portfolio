@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, Code2 } from "lucide-react";
 import Image from "next/image";
 
 type FilterType = "All" | "Android" | "Web";
@@ -133,12 +133,20 @@ export default function Projects() {
             >
               {/* Project Image */}
               <div className="relative w-full h-[220px] overflow-hidden">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+                {project.image ? (
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-slate-900 flex items-center justify-center text-[var(--main-color)] opacity-40">
+                    <Code2 size={48} />
+                  </div>
+                )}
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#030712] to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
                 {/* Hover overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[rgba(6,11,25,0.95)] via-[rgba(6,11,25,0.4)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-center justify-center gap-4">
                   <a
