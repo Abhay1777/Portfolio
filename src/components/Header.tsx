@@ -50,10 +50,11 @@ export default function Header() {
         {/* Logo */}
         <Link
           href="#home"
-          className="text-2xl md:text-3xl font-extrabold tracking-tight text-white group"
+          className="relative text-2xl md:text-3xl font-black tracking-tighter text-white group"
         >
-          <span className="text-white">Abhay</span>
-          <span className="gradient-text">.</span>
+          <span className="relative z-10">Abhay</span>
+          <span className="text-[var(--main-color)] group-hover:animate-glitch inline-block">.</span>
+          <span className="absolute -inset-x-2 -inset-y-1 bg-white/5 rounded-lg -z-0 opacity-0 group-hover:opacity-100 transition-opacity" />
         </Link>
 
         {/* Desktop Nav */}
