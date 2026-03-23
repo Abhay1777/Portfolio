@@ -43,9 +43,16 @@ export default function Preloader() {
           className="fixed inset-0 z-[100] bg-[#030712] flex flex-col items-center justify-center font-mono overflow-hidden"
         >
           {/* Matrix-like Noise Background */}
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none select-none text-[8px] leading-tight flex flex-wrap gap-1">
-            {Array.from({ length: 1000 }).map((_, i) => (
-              <span key={i}>{Math.random() > 0.5 ? "1" : "0"}</span>
+          <div className="absolute inset-0 opacity-[0.05] pointer-events-none select-none text-[8px] leading-tight flex flex-wrap gap-2 p-4">
+            {Array.from({ length: 400 }).map((_, i) => (
+              <motion.span 
+                 key={i}
+                 initial={{ opacity: 0 }}
+                 animate={{ opacity: [0, 1, 0] }}
+                 transition={{ duration: Math.random() * 2 + 1, repeat: Infinity }}
+              >
+                  {Math.random() > 0.5 ? "0" : "1"}
+              </motion.span>
             ))}
           </div>
 
