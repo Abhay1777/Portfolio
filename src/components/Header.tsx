@@ -50,11 +50,14 @@ export default function Header() {
         {/* Logo */}
         <Link
           href="#home"
-          className="relative text-2xl md:text-3xl font-black tracking-tighter text-white group"
+          className="flex items-center gap-2 group"
         >
-          <span className="relative z-10">Abhay</span>
-          <span className="text-[var(--main-color)] group-hover:animate-glitch inline-block">.</span>
-          <span className="absolute -inset-x-2 -inset-y-1 bg-white/5 rounded-lg -z-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--main-color)] to-[var(--accent-color)] flex items-center justify-center text-white scale-90 group-hover:scale-100 transition-transform active:scale-95">
+             <span className="text-sm font-black italic">AD</span>
+          </div>
+          <span className="text-xl font-black tracking-tighter text-white group-hover:text-[var(--main-color)] transition-colors hidden sm:block">
+            Abhay<span className="text-[var(--main-color)]">.</span>
+          </span>
         </Link>
 
         {/* Desktop Nav */}

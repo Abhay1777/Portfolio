@@ -12,99 +12,92 @@ export default function Preloader() {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer);
-          setTimeout(() => setLoading(false), 500);
+          setTimeout(() => setLoading(false), 800);
           return 100;
         }
-        return prev + Math.floor(Math.random() * 15) + 5;
+        return prev + Math.floor(Math.random() * 10) + 5;
       });
-    }, 150);
+    }, 100);
     return () => clearInterval(timer);
   }, []);
-
-  const terminalLines = [
-    "Initializing Core Systems...",
-    "Establishing Secure Connection...",
-    "Loading Assets (React, Next.js, Framer)...",
-    "Configuring Neural Interfaces...",
-    "Optimizing Graphics Engine...",
-    "Ready for User Input.",
-  ];
 
   return (
     <AnimatePresence>
       {loading && (
-        <motion.div
-          initial={{ opacity: 1 }}
-          exit={{ 
-            y: "-100%", 
-            opacity: 0,
-            transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } 
-          }}
-          className="fixed inset-0 z-[100] bg-[#030712] flex flex-col items-center justify-center font-mono overflow-hidden"
-        >
-          {/* Matrix-like Noise Background */}
-          <div className="absolute inset-0 opacity-[0.05] pointer-events-none select-none text-[8px] leading-tight flex flex-wrap gap-2 p-4">
-            {Array.from({ length: 400 }).map((_, i) => (
-              <motion.span 
-                 key={i}
-                 initial={{ opacity: 0 }}
-                 animate={{ opacity: [0, 1, 0] }}
-                 transition={{ duration: Math.random() * 2 + 1, repeat: Infinity }}
-              >
-                  {Math.random() > 0.5 ? "0" : "1"}
-              </motion.span>
-            ))}
-          </div>
-
-          <div className="relative z-10 w-full max-w-sm px-8">
-            {/* Visual Logo */}
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="flex justify-center mb-12"
-            >
-              <div className="relative group">
-                <div className="absolute -inset-4 bg-gradient-to-r from-[var(--main-color)] to-[var(--accent-color)] opacity-20 blur-xl animate-pulse-energy" />
-                <span className="text-6xl font-black text-white tracking-tighter relative z-10">
-                  AD<span className="text-[var(--main-color)]">.</span>
-                </span>
-              </div>
-            </motion.div>
-
-            {/* Terminal Lines */}
-            <div className="space-y-2 mb-8 h-20 overflow-hidden text-[#4ade80]/60 text-[10px] uppercase tracking-widest">
-                {terminalLines.map((line, i) => (
-                    <motion.p
-                        key={i}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ 
-                            opacity: progress > (i * 15) ? 1 : 0, 
-                            x: progress > (i * 15) ? 0 : -10 
-                        }}
-                    >
-                        {`> ${line}`}
-                    </motion.p>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden">
+          {/* Left Shutter */}
+          <motion.div
+            initial={{ x: 0 }}
+            exit={{ 
+               x: "-100%", 
+               transition: { duration: 1.2, ease: [0.85, 0, 0.15, 1], delay: 0.2 } 
+            }}
+            className="absolute top-0 left-0 w-1/2 h-full bg-[#030712] border-r border-white/10 z-20 flex items-center justify-end"
+          >
+             {/* Teeth Pattern Left */}
+             <div className="flex flex-col h-full justify-around opacity-20">
+                {Array.from({ length: 15 }).map((_, i) => (
+                   <div key={i} className="w-8 h-px bg-white" />
                 ))}
+             </div>
+          </motion.div>
+
+          {/* Right Shutter */}
+          <motion.div
+            initial={{ x: 0 }}
+            exit={{ 
+               x: "100%", 
+               transition: { duration: 1.2, ease: [0.85, 0, 0.15, 1], delay: 0.2 } 
+            }}
+            className="absolute top-0 right-0 w-1/2 h-full bg-[#030712] border-l border-white/10 z-20 flex items-center justify-start"
+          >
+             {/* Teeth Pattern Right */}
+             <div className="flex flex-col h-full justify-around opacity-20">
+                {Array.from({ length: 15 }).map((_, i) => (
+                   <div key={i} className="w-8 h-px bg-white" />
+                ))}
+             </div>
+          </motion.div>
+
+          {/* Center Loading Core */}
+          <motion.div
+            exit={{ opacity: 0, scale: 2, filter: "blur(20px)" }}
+            transition={{ duration: 0.5 }}
+            className="relative z-30 flex flex-col items-center"
+          >
+            {/* The Orb */}
+            <div className="relative w-24 h-24 mb-6">
+               <motion.div 
+                 animate={{ rotate: 360 }}
+                 transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                 className="absolute inset-0 border-2 border-[var(--main-color)] rounded-full border-t-transparent"
+               />
+               <motion.div 
+                 animate={{ rotate: -360 }}
+                 transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                 className="absolute -inset-2 border border-white/10 rounded-full border-b-transparent"
+               />
+               <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-xl font-black text-white">{progress}%</span>
+               </div>
             </div>
 
-            {/* Progress Bar Container */}
-            <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden relative">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${progress}%` }}
-                className="absolute top-0 left-0 h-full bg-gradient-to-r from-[var(--main-color)] to-[var(--accent-color)]"
-              />
-            </div>
+            <motion.h2 
+               animate={{ opacity: [0.3, 1, 0.3] }}
+               transition={{ duration: 2, repeat: Infinity }}
+               className="text-[10px] uppercase tracking-[0.5em] text-[var(--main-color)] font-bold"
+            >
+               Vault Initializing
+            </motion.h2>
+          </motion.div>
 
-            <div className="flex justify-between mt-4">
-               <span className="text-[10px] text-[var(--text-muted)] tracking-widest uppercase">System Loading</span>
-               <span className="text-[10px] text-white font-bold tabular-nums">{progress}%</span>
-            </div>
+          {/* Background Data Rain */}
+          <div className="absolute inset-0 z-10 opacity-10 flex flex-wrap gap-4 p-8 pointer-events-none">
+             {Array.from({ length: 200 }).map((_, i) => (
+                <span key={i} className="text-[6px] font-mono text-white/50">{Math.random().toString(16).slice(2, 5)}</span>
+             ))}
           </div>
-
-          {/* Glitch Overlay */}
-          <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#030712] via-transparent to-transparent opacity-50" />
-        </motion.div>
+        </div>
       )}
     </AnimatePresence>
   );
