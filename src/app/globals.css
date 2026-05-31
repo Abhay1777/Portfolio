@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Times New Roman", Times, serif;
-  --font-display: "Times New Roman", Times, serif;
-  --font-mono: "Times New Roman", Times, serif;
+  --font-sans: var(--font-plus-jakarta), sans-serif;
+  --font-display: var(--font-plus-jakarta), sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", monospace;
   --color-background: var(--bg-color);
   --color-foreground: var(--text-color);
   --color-muted: var(--text-muted);
