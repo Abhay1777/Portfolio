@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, "Cascadia Code", monospace;
+  --font-sans: "Times New Roman", Times, serif;
+  --font-display: "Times New Roman", Times, serif;
+  --font-mono: "Times New Roman", Times, serif;
   --color-background: var(--bg-color);
   --color-foreground: var(--text-color);
   --color-muted: var(--text-muted);
@@ -45,7 +45,7 @@
   body {
     background-color: var(--bg-color);
     color: var(--text-color);
-    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-sans);
     overflow-x: hidden;
   }
 

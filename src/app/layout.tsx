@@ -1,27 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Syne, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  weight: ["300", "400", "500", "600", "700", "800"],
-  display: "swap",
-});
-
-const syne = Syne({
-  subsets: ["latin"],
-  variable: "--font-syne",
-  weight: ["400", "500", "600", "700", "800"],
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains",
-  weight: ["400", "500", "700"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://abhay1777.github.io"),
@@ -68,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${syne.variable} ${jetbrainsMono.variable} h-full antialiased scroll-smooth`}
+      className="h-full antialiased scroll-smooth"
     >
       <body className="min-h-full flex flex-col bg-[var(--bg-color)] text-[var(--text-color)] overflow-x-hidden">
         {children}
