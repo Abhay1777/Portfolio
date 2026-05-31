@@ -1,209 +1,335 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { Download, CheckCircle, BookOpen, Briefcase, GraduationCap } from "lucide-react";
 import Image from "next/image";
-import CountUp from "react-countup";
-import { useInView } from "react-intersection-observer";
-import { Download, CheckCircle } from "lucide-react";
 import {
   SiReact, SiNextdotjs, SiNodedotjs, SiJavascript,
   SiTypescript, SiTailwindcss, SiPython, SiHtml5,
-  SiCss, SiGit, SiAndroid, SiFirebase,
+  SiCss, SiGit, SiAndroid, SiFirebase, SiGithub,
 } from "react-icons/si";
 import { FaJava } from "react-icons/fa";
 
 const stats = [
-  { end: 2,    suffix: "nd", label: "Year\nStudent",      decimals: 0 },
-  { end: 1,    suffix: "",   label: "Tech\nInternship",   decimals: 0 },
-  { end: 3,    suffix: "+",  label: "Android\nProjects",  decimals: 0 },
+  { end: 15, suffix: "+", label: "GitHub Repos"    },
+  { end: 3,  suffix: "+", label: "Android Projects" },
+  { end: 2,  suffix: "k+",label: "Hours Coded"      },
 ];
 
 const skillIcons = [
-  { Icon: SiReact,        name: "React",      color: "#61dafb" },
-  { Icon: SiNextdotjs,    name: "Next.js",    color: "#ffffff" },
-  { Icon: SiNodedotjs,    name: "Node.js",    color: "#68a063" },
-  { Icon: SiJavascript,   name: "JavaScript", color: "#f7df1e" },
-  { Icon: SiTypescript,   name: "TypeScript", color: "#3178c6" },
-  { Icon: SiTailwindcss,  name: "Tailwind",   color: "#38bdf8" },
-  { Icon: FaJava,         name: "Java",       color: "#f89820" },
-  { Icon: SiPython,       name: "Python",     color: "#fbbf24" },
-  { Icon: SiHtml5,        name: "HTML5",      color: "#e34f26" },
+  { Icon: SiReact,       name: "React",      color: "#61dafb" },
+  { Icon: SiNextdotjs,   name: "Next.js",    color: "#ffffff" },
+  { Icon: SiNodedotjs,   name: "Node.js",    color: "#68a063" },
+  { Icon: SiJavascript,  name: "JavaScript", color: "#f7df1e" },
+  { Icon: SiTypescript,  name: "TypeScript", color: "#3178c6" },
+  { Icon: SiTailwindcss, name: "Tailwind",   color: "#38bdf8" },
+  { Icon: FaJava,        name: "Java",       color: "#f89820" },
+  { Icon: SiPython,      name: "Python",     color: "#fbbf24" },
+  { Icon: SiHtml5,       name: "HTML5",      color: "#e34f26" },
   { Icon: SiCss,         name: "CSS3",       color: "#264de4" },
-  { Icon: SiAndroid,      name: "Android",    color: "#3ddc84" },
-  { Icon: SiFirebase,     name: "Firebase",   color: "#ffca28" },
-  { Icon: SiGit,          name: "Git",        color: "#f05032" },
+  { Icon: SiAndroid,     name: "Android",    color: "#3ddc84" },
+  { Icon: SiFirebase,    name: "Firebase",   color: "#ffca28" },
+  { Icon: SiGit,         name: "Git",        color: "#f05032" },
+  { Icon: SiGithub,      name: "GitHub",     color: "#ffffff" },
 ];
 
-export default function About() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 });
+// Duplicate for infinite marquee
+const marqueeSkills = [...skillIcons, ...skillIcons];
+
+const highlights = [
+  "Passionate about clean, scalable architecture",
+  "Strong problem-solving & DSA foundation",
+  "Experience with Android & full-stack web",
+  "Interned at V2VEDtech — real world exposure",
+];
+
+const timeline = [
+  {
+    icon: GraduationCap,
+    title: "B.E. Information Technology",
+    subtitle: "2nd Year Student",
+    period: "2023 – Present",
+    color: "#3abff8",
+  },
+  {
+    icon: Briefcase,
+    title: "Tech Internship",
+    subtitle: "V2VEDtech",
+    period: "2024",
+    color: "#a78bfa",
+  },
+  {
+    icon: BookOpen,
+    title: "Android Development",
+    subtitle: "Java, Android Studio",
+    period: "2024 – Present",
+    color: "#34d399",
+  },
+];
+
+// Animated counter using Framer Motion (replaces react-countup + react-intersection-observer)
+function AnimatedCounter({ end, suffix }: { end: number; suffix: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="about" className="section bg-[var(--second-bg-color)]">
-      {/* Decorative element */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-px bg-gradient-to-r from-transparent via-[var(--main-color)] to-transparent opacity-30" />
-
-      <motion.h2
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8 }}
-        className="heading"
-      >
-        About <span className="gradient-text">Me</span>
-      </motion.h2>
-
-      <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
-        {/* Image */}
-        <motion.div
-          initial={{ opacity: 0, x: -60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-          className="flex-1 w-full max-w-[420px] lg:max-w-full relative"
+    <span ref={ref}>
+      {isInView ? (
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
         >
-          {/* Decorative ring */}
-          <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-[var(--main-color)] to-[var(--accent-color)] opacity-10 blur-xl animate-pulse-ring" />
-          <div className="relative rounded-2xl overflow-hidden glass-panel p-2">
-            <div className="relative aspect-[4/5] rounded-xl overflow-hidden">
-              <Image
-                src="/profile.jpg"
-                alt="Abhay Dubey"
-                fill
-                className="object-cover transition-transform duration-700 hover:scale-105"
-              />
-              {/* Image overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(6,11,25,0.5)] to-transparent pointer-events-none" />
+          <CountValue from={0} to={end} suffix={suffix} />
+        </motion.span>
+      ) : (
+        `0${suffix}`
+      )}
+    </span>
+  );
+}
+
+function CountValue({ from, to, suffix }: { from: number; to: number; suffix: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect: {
+    // Use requestAnimationFrame for smooth counting
+    let start: number | null = null;
+    const duration = 2200;
+    const step = (timestamp: number) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      const current = Math.floor(from + (to - from) * eased);
+      if (ref.current) ref.current.textContent = `${current}${suffix}`;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  return <span ref={ref}>{`${from}${suffix}`}</span>;
+}
+
+export default function About() {
+  return (
+    <section id="about" className="section bg-[var(--second-bg-color)]">
+      {/* Top divider */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-px bg-gradient-to-r from-transparent via-[var(--main-color)] to-transparent opacity-20 pointer-events-none" />
+
+      {/* Ambient glow */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--accent-color)] opacity-[0.03] blur-[120px] rounded-full pointer-events-none" />
+
+      {/* Section heading */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.7 }}
+        className="text-center mb-16"
+      >
+        <div className="flex justify-center mb-4">
+          <span className="section-label">01 — About</span>
+        </div>
+        <h2 className="heading">
+          About <span className="gradient-text">Me</span>
+        </h2>
+        <p className="heading-sub">
+          A second-year IT student from Mumbai, building practical software that solves real problems.
+        </p>
+      </motion.div>
+
+      {/* Main Grid */}
+      <div className="flex flex-col lg:flex-row gap-14 items-start max-w-6xl mx-auto">
+
+        {/* LEFT — Profile + Timeline + Highlights */}
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="flex-1 min-w-0"
+        >
+          {/* Avatar card */}
+          <div className="relative mb-8 p-5 glass-panel rounded-2xl overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-[var(--main-color)]/5 to-[var(--accent-color)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+            <div className="flex items-center gap-4">
+              <div className="relative shrink-0">
+                <div className="relative w-16 h-16 rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_30px_rgba(58,191,248,0.15)]">
+                  <Image
+                    src="/profile.jpg"
+                    alt="Abhay Dubey profile picture"
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-[var(--success-color)] rounded-full border-2 border-[var(--second-bg-color)] animate-pulse" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-white font-display">Abhay Dubey</h3>
+                <p className="text-xs text-[var(--text-muted)] mt-0.5">IT Engineering Student</p>
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="tag text-[10px]">Open to Work</span>
+                  <span className="tag tag-accent text-[10px]">Mumbai, India</span>
+                </div>
+              </div>
             </div>
+
+            <p className="mt-4 text-sm text-[var(--text-muted)] leading-relaxed">
+              I&apos;m a second-year IT engineering student with a solid foundation in{" "}
+              <span className="text-white font-medium">Java, C, and C++</span>. I build
+              practical, real-world applications — from Android apps to full-stack web. Currently
+              deepening my skills in React, Next.js, and problem-solving.
+            </p>
           </div>
-          {/* Floating badge */}
-          <motion.div
-            animate={{ y: [-4, 4, -4] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -bottom-4 -right-4 bg-gradient-to-br from-[var(--main-color)] to-[var(--accent-color)] text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg"
-          >
-            ✨ Open to Work
-          </motion.div>
+
+          {/* Timeline */}
+          <div className="space-y-3 mb-8">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-[var(--text-muted)] mb-4">
+              Journey
+            </h4>
+            {timeline.map(({ icon: Icon, title, subtitle, period, color }, i) => (
+              <motion.div
+                key={title}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 + 0.2 }}
+                className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.05] transition-all"
+              >
+                <div
+                  className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ background: `${color}15`, border: `1px solid ${color}30` }}
+                >
+                  <Icon size={16} style={{ color }} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-semibold text-white leading-none">{title}</div>
+                  <div className="text-[10px] text-[var(--text-muted)] mt-0.5">{subtitle}</div>
+                </div>
+                <span className="text-[10px] font-mono-custom text-[var(--text-subtle)] whitespace-nowrap">{period}</span>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Highlights */}
+          <ul className="space-y-2.5">
+            {highlights.map((item, i) => (
+              <motion.li
+                key={item}
+                initial={{ opacity: 0, x: -15 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 + 0.4 }}
+                className="flex items-center gap-3 text-sm text-[var(--text-muted)]"
+              >
+                <CheckCircle size={14} className="text-[var(--main-color)] shrink-0" />
+                {item}
+              </motion.li>
+            ))}
+          </ul>
         </motion.div>
 
-        {/* Content */}
-        <div className="flex-[1.2] w-full">
-          <motion.h3
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-3xl font-bold mb-6"
-          >
-            Building practical,{" "}
-            <span className="gradient-text">real-world</span> applications.
-          </motion.h3>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-base text-[var(--text-muted)] space-y-4 mb-10 leading-relaxed"
-          >
-            <p>
-              I am a second-year Information Technology engineering student with
-              a strong foundation in Java, C, and C++. I focus on building
-              practical, real-world applications rather than just theoretical
-              knowledge.
-            </p>
-            <p>
-              I have developed Android-based projects including a Tic-Tac-Toe
-              game and a Stopwatch application. Currently, I&apos;m exploring
-              full-stack web development and strengthening my problem-solving
-              skills. I also completed an internship at{" "}
-              <strong className="text-white">V2VEDtech</strong>.
-            </p>
-          </motion.div>
-
-          {/* Highlights list */}
-          <motion.ul
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.35 }}
-            className="space-y-2 mb-10"
-          >
-            {[
-              "Passionate about clean, scalable code",
-              "Strong problem-solving & DSA foundation",
-              "Experience with Android & Web development",
-            ].map((item) => (
-              <li key={item} className="flex items-center gap-3 text-sm text-[var(--text-muted)]">
-                <CheckCircle size={16} className="text-[var(--main-color)] shrink-0" />
-                {item}
-              </li>
-            ))}
-          </motion.ul>
-
-          {/* Animated Stats */}
-          <motion.div
-            ref={ref}
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="grid grid-cols-3 gap-6 mb-10 pb-10 border-b border-[var(--glass-border)]"
-          >
-            {stats.map((stat, i) => (
-              <div key={i} className="text-center">
-                <h4 className="text-4xl md:text-5xl font-bold gradient-text mb-1">
-                  {inView ? (
-                    <CountUp
-                      end={stat.end}
-                      duration={2}
-                      suffix={stat.suffix}
-                      decimals={stat.decimals}
-                    />
-                  ) : (
-                    "0"
-                  )}
-                </h4>
-                <p className="text-xs text-[var(--text-muted)] whitespace-pre-line leading-tight uppercase tracking-wide">
-                  {stat.label}
+        {/* RIGHT — Stats + Skill Marquee + Currently Exploring + CTA */}
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="flex-1 min-w-0"
+        >
+          {/* Stats row */}
+          <div className="grid grid-cols-3 gap-3 mb-8">
+            {stats.map(({ end, suffix, label }, i) => (
+              <motion.div
+                key={label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 + 0.1 }}
+                className="relative p-4 glass-panel rounded-2xl text-center overflow-hidden group hover:-translate-y-1 transition-transform"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-[var(--main-color)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                <div className="text-2xl xl:text-3xl font-black gradient-text font-display mb-1 leading-none">
+                  <AnimatedCounter end={end} suffix={suffix} />
+                </div>
+                <p className="text-[9px] font-bold uppercase tracking-widest text-[var(--text-muted)]">
+                  {label}
                 </p>
-              </div>
+              </motion.div>
             ))}
-          </motion.div>
+          </div>
 
-          {/* Tech Icons */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-          >
-            <h4 className="text-lg font-semibold mb-5 text-[var(--text-muted)] uppercase tracking-wider">
+          {/* Skill Marquee */}
+          <div className="mb-8">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-[var(--text-muted)] mb-4">
               Tech Stack
             </h4>
-            <div className="flex flex-wrap gap-3 mb-10">
-              {skillIcons.map(({ Icon, name, color }) => (
-                <div
-                  key={name}
-                  className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm font-medium hover:bg-white/10 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 cursor-default group"
-                >
-                  <Icon className="text-lg transition-transform group-hover:scale-110" style={{ color }} />
-                  <span className="text-[var(--text-muted)] group-hover:text-white transition-colors">{name}</span>
-                </div>
-              ))}
+
+            {/* Row 1 */}
+            <div className="relative overflow-hidden mb-2.5 py-1">
+              <div className="flex gap-2.5 animate-marquee">
+                {marqueeSkills.map(({ Icon, name, color }, i) => (
+                  <div
+                    key={`${name}-${i}`}
+                    className="flex items-center gap-2 px-3 py-1.5 glass-panel rounded-lg text-sm font-medium whitespace-nowrap shrink-0 hover:border-white/20 transition-colors"
+                  >
+                    <Icon style={{ color }} size={14} />
+                    <span className="text-[var(--text-muted)] text-xs">{name}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            {/* Download Resume */}
-            <a
-              href="/resume.pdf"
-              download
-              className="btn-primary inline-flex w-fit"
-            >
-              <Download size={18} />
-              Download Resume
-            </a>
-          </motion.div>
-        </div>
+            {/* Row 2 (reversed) */}
+            <div className="relative overflow-hidden py-1">
+              <div
+                className="flex gap-2.5"
+                style={{ animation: "marquee 32s linear infinite reverse" }}
+              >
+                {[...marqueeSkills].reverse().map(({ Icon, name, color }, i) => (
+                  <div
+                    key={`${name}-rev-${i}`}
+                    className="flex items-center gap-2 px-3 py-1.5 glass-panel rounded-lg text-sm font-medium whitespace-nowrap shrink-0 hover:border-white/20 transition-colors"
+                  >
+                    <Icon style={{ color }} size={14} />
+                    <span className="text-[var(--text-muted)] text-xs">{name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Currently exploring */}
+          <div className="p-4 rounded-2xl border border-[var(--accent-color)]/20 bg-[var(--accent-color)]/[0.04] mb-8">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-2 h-2 rounded-full bg-[var(--accent-color)] animate-pulse" />
+              <span className="text-[10px] font-bold text-[var(--accent-color)] uppercase tracking-widest">
+                Currently Exploring
+              </span>
+            </div>
+            <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+              Advanced React patterns, system design, competitive programming, and deepening my
+              understanding of{" "}
+              <span className="text-white font-medium">full-stack architecture</span>.
+            </p>
+          </div>
+
+          {/* CTA */}
+          <a
+            href="/Abhay_Dubey_CV.pdf"
+            download
+            className="btn-primary w-full justify-center rounded-xl"
+          >
+            <Download size={17} />
+            Download Resume
+          </a>
+        </motion.div>
       </div>
     </section>
   );
 }
+
+// Inline useEffect for CountValue — avoiding hook rules violation
+import { useEffect } from "react";

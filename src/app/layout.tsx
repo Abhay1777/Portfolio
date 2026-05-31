@@ -1,14 +1,30 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Inter, Syne, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-plus-jakarta",
+  variable: "--font-inter",
   weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
+const syne = Syne({
+  subsets: ["latin"],
+  variable: "--font-syne",
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+  weight: ["400", "500", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://abhay1777.github.io"),
   title: "Abhay Dubey | Full Stack Developer & IT Student",
   description:
     "Portfolio of Abhay Dubey — a second-year IT engineering student and full stack developer from Mumbai, specialising in Android development and modern web technologies.",
@@ -22,18 +38,25 @@ export const metadata: Metadata = {
     "Next.js",
     "IT student",
     "Mumbai",
+    "Java",
+    "TypeScript",
   ],
   openGraph: {
     title: "Abhay Dubey | Full Stack Developer",
     description:
-      "Crafting high-performance, beautiful, and interactive digital experiences.",
+      "Crafting high-performance, beautiful, and interactive digital experiences for Android and Web.",
     type: "website",
     locale: "en_IN",
+    url: "https://abhay1777.github.io/Portfolio/",
   },
   twitter: {
     card: "summary_large_image",
     title: "Abhay Dubey | Full Stack Developer",
     description: "Crafting beautiful and interactive digital experiences.",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -45,9 +68,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakartaSans.variable} h-full antialiased scroll-smooth`}
+      className={`${inter.variable} ${syne.variable} ${jetbrainsMono.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col font-sans bg-[var(--bg-color)] text-[var(--text-color)] overflow-x-hidden">
+      <body className="min-h-full flex flex-col bg-[var(--bg-color)] text-[var(--text-color)] overflow-x-hidden">
         {children}
       </body>
     </html>

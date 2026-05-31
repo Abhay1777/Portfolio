@@ -8,96 +8,96 @@ export default function Preloader() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          setTimeout(() => setLoading(false), 800);
-          return 100;
-        }
-        return prev + Math.floor(Math.random() * 10) + 5;
-      });
-    }, 100);
-    return () => clearInterval(timer);
+    let current = 0;
+    const target = 100;
+
+    const increment = () => {
+      const remaining = target - current;
+      const step = Math.max(1, Math.floor(remaining * 0.08 + Math.random() * 5));
+      current = Math.min(target, current + step);
+      setProgress(current);
+
+      if (current < target) {
+        const delay = current > 85 ? 120 : current > 60 ? 60 : 40;
+        setTimeout(increment, delay);
+      } else {
+        // Clean single exit: short pause then unmount
+        setTimeout(() => setLoading(false), 700);
+      }
+    };
+
+    const start = setTimeout(increment, 300);
+    return () => clearTimeout(start);
   }, []);
 
   return (
     <AnimatePresence>
       {loading && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden">
-          {/* Left Shutter */}
-          <motion.div
-            initial={{ x: 0 }}
-            exit={{ 
-               x: "-100%", 
-               transition: { duration: 1.2, ease: [0.85, 0, 0.15, 1], delay: 0.2 } 
-            }}
-            className="absolute top-0 left-0 w-1/2 h-full bg-[#030712] border-r border-white/10 z-20 flex items-center justify-end"
-          >
-             {/* Teeth Pattern Left */}
-             <div className="flex flex-col h-full justify-around opacity-20">
-                {Array.from({ length: 15 }).map((_, i) => (
-                   <div key={i} className="w-8 h-px bg-white" />
-                ))}
-             </div>
-          </motion.div>
+        <motion.div
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#050a14] overflow-hidden"
+          exit={{ opacity: 0, scale: 1.04 }}
+          transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+        >
+          {/* Background grid */}
+          <div className="absolute inset-0 tech-grid opacity-40" />
 
-          {/* Right Shutter */}
-          <motion.div
-            initial={{ x: 0 }}
-            exit={{ 
-               x: "100%", 
-               transition: { duration: 1.2, ease: [0.85, 0, 0.15, 1], delay: 0.2 } 
-            }}
-            className="absolute top-0 right-0 w-1/2 h-full bg-[#030712] border-l border-white/10 z-20 flex items-center justify-start"
-          >
-             {/* Teeth Pattern Right */}
-             <div className="flex flex-col h-full justify-around opacity-20">
-                {Array.from({ length: 15 }).map((_, i) => (
-                   <div key={i} className="w-8 h-px bg-white" />
-                ))}
-             </div>
-          </motion.div>
+          {/* Ambient glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-[var(--main-color)] opacity-5 blur-[100px]" />
 
-          {/* Center Loading Core */}
-          <motion.div
-            exit={{ opacity: 0, scale: 2, filter: "blur(20px)" }}
-            transition={{ duration: 0.5 }}
-            className="relative z-30 flex flex-col items-center"
-          >
-            {/* The Orb */}
-            <div className="relative w-24 h-24 mb-6">
-               <motion.div 
-                 animate={{ rotate: 360 }}
-                 transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                 className="absolute inset-0 border-2 border-[var(--main-color)] rounded-full border-t-transparent"
-               />
-               <motion.div 
-                 animate={{ rotate: -360 }}
-                 transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-                 className="absolute -inset-2 border border-white/10 rounded-full border-b-transparent"
-               />
-               <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-xl font-black text-white">{progress}%</span>
-               </div>
-            </div>
+          {/* Core content */}
+          <div className="relative z-10 flex flex-col items-center gap-10">
 
-            <motion.h2 
-               animate={{ opacity: [0.3, 1, 0.3] }}
-               transition={{ duration: 2, repeat: Infinity }}
-               className="text-[10px] uppercase tracking-[0.5em] text-[var(--main-color)] font-bold"
+            {/* Monogram */}
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="relative"
             >
-               Vault Initializing
-            </motion.h2>
-          </motion.div>
+              {/* Spinning rings */}
+              <div
+                className="absolute -inset-4 border border-[var(--main-color)]/20 rounded-full"
+                style={{ animation: "spin-slow 6s linear infinite" }}
+              />
+              <div
+                className="absolute -inset-8 border border-[var(--accent-color)]/10 rounded-full"
+                style={{ animation: "spin-slow 10s linear infinite reverse" }}
+              />
 
-          {/* Background Data Rain */}
-          <div className="absolute inset-0 z-10 opacity-10 flex flex-wrap gap-4 p-8 pointer-events-none">
-             {Array.from({ length: 200 }).map((_, i) => (
-                <span key={i} className="text-[6px] font-mono text-white/50">{Math.random().toString(16).slice(2, 5)}</span>
-             ))}
+              {/* Logo */}
+              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--main-color)] to-[var(--accent-color)] flex items-center justify-center shadow-[0_0_40px_rgba(58,191,248,0.4)]">
+                <span className="text-2xl font-black text-white font-display italic tracking-tight">AD</span>
+              </div>
+            </motion.div>
+
+            {/* Progress section */}
+            <div className="flex flex-col items-center gap-4 w-64">
+              {/* Progress bar */}
+              <div className="w-full h-[2px] bg-white/5 rounded-full overflow-hidden">
+                <motion.div
+                  className="h-full rounded-full"
+                  style={{
+                    background: "linear-gradient(90deg, var(--main-color), var(--accent-color))",
+                    boxShadow: "0 0 10px rgba(58, 191, 248, 0.6)",
+                  }}
+                  initial={{ width: "0%" }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 0.1, ease: "linear" }}
+                />
+              </div>
+
+              {/* Status text */}
+              <div className="flex items-center justify-between w-full">
+                <span className="text-[11px] font-mono-custom font-semibold text-[var(--text-muted)] tracking-widest uppercase">
+                  {progress < 30 ? "Initializing..." : progress < 60 ? "Loading assets..." : progress < 90 ? "Almost ready..." : "Launching..."}
+                </span>
+                <span className="text-[11px] font-mono-custom font-bold text-[var(--main-color)]">
+                  {progress}%
+                </span>
+              </div>
+            </div>
           </div>
-        </div>
+        </motion.div>
       )}
     </AnimatePresence>
   );
