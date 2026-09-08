@@ -1,0 +1,140 @@
+/* Natural editorial theme — warm, restrained, human-made feel */
+:root {
+  --bg-color: #171814;
+  --second-bg-color: #1f211b;
+  --third-bg-color: #282a23;
+  --text-color: #eee9dc;
+  --text-muted: #b6b1a4;
+  --text-subtle: #817c70;
+  --main-color: #a5a77c;
+  --main-light: #c4c59b;
+  --accent-color: #b28b61;
+  --accent-light: #c9aa86;
+  --success-color: #9eb47b;
+  --glass-bg: rgba(255, 250, 238, 0.045);
+  --glass-border: rgba(238, 233, 220, 0.11);
+  --card-shadow: 0 14px 40px rgba(0, 0, 0, 0.22);
+  --card-hover-shadow: 0 20px 55px rgba(0, 0, 0, 0.3);
+  --neon-glow: 0 10px 35px rgba(0, 0, 0, 0.25);
+  --neon-glow-accent: 0 10px 35px rgba(0, 0, 0, 0.25);
+}
+
+body {
+  background: var(--bg-color);
+}
+
+/* Remove the synthetic neon treatment */
+.gradient-text-animated {
+  background: none !important;
+  color: var(--main-color) !important;
+  -webkit-text-fill-color: var(--main-color) !important;
+  animation: none !important;
+}
+
+.gradient-text {
+  background: none !important;
+  color: var(--main-color) !important;
+  -webkit-text-fill-color: var(--main-color) !important;
+}
+
+.tech-grid {
+  background-image:
+    linear-gradient(rgba(238, 233, 220, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(238, 233, 220, 0.035) 1px, transparent 1px) !important;
+  background-size: 72px 72px;
+  mask-image: none;
+}
+
+.glass-panel {
+  background: rgba(255, 250, 238, 0.045);
+  border-color: rgba(238, 233, 220, 0.1);
+  box-shadow: none;
+}
+
+.card {
+  background: var(--third-bg-color);
+  border-color: rgba(238, 233, 220, 0.09);
+  box-shadow: var(--card-shadow);
+}
+
+.card:hover {
+  border-color: rgba(165, 167, 124, 0.3);
+  box-shadow: var(--card-hover-shadow);
+}
+
+.btn-primary {
+  background: var(--main-color) !important;
+  color: #171814 !important;
+  box-shadow: 0 7px 22px rgba(0, 0, 0, 0.2) !important;
+}
+
+.btn-primary:hover {
+  background: var(--main-light) !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28) !important;
+}
+
+.btn-outline {
+  background: rgba(255, 250, 238, 0.025);
+  border-color: rgba(238, 233, 220, 0.16);
+}
+
+.btn-outline:hover {
+  border-color: var(--main-color);
+  background: rgba(165, 167, 124, 0.08);
+  box-shadow: none;
+}
+
+.neon-glow,
+.neon-glow-accent,
+.glow-blue,
+.glow-violet {
+  box-shadow: none !important;
+}
+
+.section-divider {
+  background: linear-gradient(90deg, transparent, var(--main-color), transparent);
+  opacity: 0.22;
+}
+
+.tag {
+  color: var(--main-color);
+  border-color: rgba(165, 167, 124, 0.22);
+  background: rgba(165, 167, 124, 0.07);
+}
+
+.tag-accent {
+  color: var(--accent-color);
+  border-color: rgba(178, 139, 97, 0.22);
+  background: rgba(178, 139, 97, 0.07);
+}
+
+/* The original hero has a hard-coded navy background. */
+[class~="bg-[#050a14]"] {
+  background-color: var(--bg-color) !important;
+}
+
+/* Tone down ambient decorative effects. */
+[class*="opacity-[0.04]"],
+[class*="opacity-[0.03]"] {
+  opacity: 0.025 !important;
+}
+
+/* Keep the profile photo natural rather than heavily tinted. */
+.cursor-dot {
+  background: var(--main-color);
+}
+
+.cursor-ring {
+  border-color: rgba(165, 167, 124, 0.45);
+}
+
+::selection {
+  background: rgba(165, 167, 124, 0.25);
+}
+
+@media (max-width: 767px) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
